@@ -1,0 +1,49 @@
+//Position this line where user code will be pasted.
+class Solution {
+  public:
+  void dfs1(int node,vector<vector<int>> &adj, vector<bool>&visited1,stack<int>&s){
+      visited1[node]=1;
+      for(int j=0;j<adj[node].size();j++){
+          if(!visited1[adj[node][j]])
+          dfs1(adj[node][j],adj,visited1,s);
+      }
+      s.push(node);
+  }
+  void dfs2(int node1,vector<bool>&visited2,  vector<vector<int>>&adj1){
+      visited2[node1]=1;
+      for(int j=0;j<adj1[node1].size();j++){
+          if(!visited2[adj1[node1][j]])
+          dfs2(adj1[node1][j],visited2,adj1);
+      }
+      
+  }
+    int kosaraju(vector<vector<int>> &adj) {
+        // code here
+        int n=adj.size();
+        int cc=0;
+        vector<bool>visited1(n,0);
+         vector<bool>visited2(n,0);
+        stack<int>s;
+        for(int i=0;i<n;i++){
+            if(!visited1[i])
+            dfs1(i,adj,visited1,s);
+        }
+        vector<vector<int>>adj1(n);
+       for(int i=0;i<n;i++){
+          for(int j=0;j<adj[i].size();j++){
+           int v=adj[i][j];
+           adj1[v].push_back(i);
+       }
+       }
+       while(!s.empty()){
+           int node1=s.top();
+           s.pop();
+           if(!visited2[node1]){
+           dfs2(node1,visited2,adj1);
+           cc++;
+           }
+       }
+       
+       return cc;
+    }
+};
