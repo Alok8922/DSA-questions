@@ -1,0 +1,17 @@
+class Solution {
+public:
+ int houserobber(int index,vector<int>&nums,int n,vector<int>&dp){
+    if(index==0)
+    return nums[0];
+    if(index==1)
+    return max(nums[0],nums[1]);
+    if(dp[index]!=-1)
+    return dp[index];
+   return dp[index]= max(nums[index]+houserobber(index-2,nums,n,dp),houserobber(index-1,nums,n,dp));
+ }
+    int rob(vector<int>& nums) {
+       int n=nums.size();
+       vector<int>dp(n+1,-1);
+       return houserobber(n-1,nums,n,dp);
+    }
+};
