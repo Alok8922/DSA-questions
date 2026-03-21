@@ -1,0 +1,24 @@
+// User function template for C++
+
+class Solution {
+  public:
+  int countm(int n,int m,string &str,string &t,    vector<vector<int>>&dp){
+      if(n==0||m==0)
+      return 0;
+      if(dp[n][m]!=-1)
+      return dp[n][m];
+      if(str[n-1]==t[m-1])
+      return 1+countm(n-1,m-1,str,t,dp);
+      else
+      return dp[n][m]= max(countm(n-1,m,str,t,dp),countm(n,m-1,str,t,dp));
+  }
+    int countMin(string str) {
+        // complete the function here
+        int n=str.size();
+        string t=str;
+        vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+        reverse(t.begin(),t.end());
+        int lcs=countm(n,n,str,t,dp);
+        return str.size()-lcs;
+    }
+};
