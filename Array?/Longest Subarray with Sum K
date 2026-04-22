@@ -1,0 +1,48 @@
+// Brute force Approch
+class Solution {
+  public:
+    int longestSubarray(vector<int>& arr, int k) {
+        // code here
+        
+        int maxi=INT_MIN;
+        int n=arr.size();
+        for(int i=0;i<n;i++){
+            int sum=0;
+            for(int j=i;j<n;j++){
+                sum=sum+arr[j];
+                if(sum==k){
+                    int len=j-i+1;
+                    maxi=max(maxi,len);
+                }
+                
+            }
+        }
+        return maxi;
+    }
+};
+
+
+// optimal approch 
+class Solution {
+  public:
+    int longestSubarray(vector<int>& arr, int k) {
+        // code here
+        unordered_map<int,int>mp;
+        int n=arr.size();
+        int sum=0,len=0;
+        for(int i=0;i<n;i++){
+        sum+=arr[i];
+        if(sum==k){
+        len=max(len,i+1);
+        }
+        if(mp.find(sum)==mp.end()){
+            mp[sum]=i;
+        }
+        if(mp.find(sum-k)!=mp.end()){
+            len=max(len,i-mp[sum-k]);
+        }
+       
+        }
+         return len;
+    }
+};
