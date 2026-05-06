@@ -1,0 +1,23 @@
+class Solution {
+public:
+void subset(int index,int n,vector<int>&temp,vector<vector<int>>&ans,vector<int>& nums){
+    if(index==n){
+        ans.push_back(temp);
+        return;
+    }
+
+    temp.push_back(nums[index]);
+    subset(index+1,n,temp,ans,nums);
+    temp.pop_back(); //yes
+    subset(index+1,n,temp,ans,nums);// no
+
+}
+    
+    vector<vector<int>> subsets(vector<int>& nums) {
+       int n=nums.size();
+       vector<int>temp;
+       vector<vector<int>>ans;
+       subset(0,n,temp,ans,nums);
+       return ans;
+    }
+};
