@@ -1,0 +1,26 @@
+class Solution {
+public:
+void targetsum(int index,vector<int>&temp,vector<vector<int>>&ans,vector<int>& candidates, int target){
+    if(index==candidates.size()||target<0){ 
+    return;
+}
+    if(target==0){
+    ans.push_back(temp);
+    return;
+       }
+// yes
+temp.push_back(candidates[index]);
+targetsum(index,temp,ans,candidates,target-candidates[index]);
+ temp.pop_back();
+// no
+targetsum(index+1,temp,ans,candidates,target);
+
+}
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int>temp;
+        vector<vector<int>>ans;
+        targetsum(0,temp,ans,candidates,target);
+        return ans;
+      
+    }
+};
