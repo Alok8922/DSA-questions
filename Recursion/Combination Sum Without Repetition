@@ -1,0 +1,89 @@
+class Solution {
+  public:
+  void targetsum(int index,vector<int>&temp,vector<vector<int>>&ans,vector<int>& arr, int target){
+  
+    if(target==0){
+    ans.push_back(temp);
+    return;
+       }
+         if(index==arr.size()||target<0){ 
+    return;
+}
+// yes
+temp.push_back(arr[index]);
+targetsum(index+1,temp,ans,arr,target-arr[index]);
+ temp.pop_back();
+// no
+int i=index+1;
+while(i<arr.size()&&arr[i]==arr[i-1]){
+        i++;
+}
+targetsum(i,temp,ans,arr,target);
+
+}
+    vector<vector<int>> uniqueCombinations(vector<int> &arr, int target) {
+        // code here
+        sort(arr.begin(),arr.end());
+         vector<int>temp;
+        vector<vector<int>>ans;
+        targetsum(0,temp,ans,arr,target);
+        return ans;
+    }
+};
+
+
+
+
+////  other similar method
+class Solution {
+public:
+
+    void solve(int index,
+               vector<int>& arr,
+               int target,
+               vector<int>& temp,
+               vector<vector<int>>& ans) {
+
+        // Base case
+        if(target == 0) {
+            ans.push_back(temp);
+            return;
+        }
+
+        for(int i = index; i < arr.size(); i++) {
+
+            // Skip duplicate elements
+            if(i > index && arr[i] == arr[i - 1])
+                continue;
+
+            // Optimization
+            if(arr[i] > target)
+                break;
+
+            // Take element
+            temp.push_back(arr[i]);
+
+            solve(i + 1,
+                  arr,
+                  target - arr[i],
+                  temp,
+                  ans);
+
+            // Backtrack
+            temp.pop_back();
+        }
+    }
+
+    vector<vector<int>> uniqueCombinations(vector<int> &arr,
+                                           int target) {
+
+        sort(arr.begin(), arr.end());
+
+        vector<vector<int>> ans;
+        vector<int> temp;
+
+        solve(0, arr, target, temp, ans);
+
+        return ans;
+    }
+};
