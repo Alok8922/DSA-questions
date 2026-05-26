@@ -1,0 +1,28 @@
+class Solution {
+  public:
+  void permut(int index,string &s,vector<string>&ans){
+      if(index==s.size()){
+          ans.push_back(s);
+          return;
+      }
+      vector<bool>use(256,0);
+      for(int i=index;i<s.size();i++){
+          if(use[s[i]]) continue;
+          use[s[i]]=1;
+          swap(s[i],s[index]);
+           permut(index+1,s,ans);
+           swap(s[i],s[index]);
+      }
+      
+  }
+    vector<string> findPermutation(string &s) {
+        // Code here there
+        int n=s.size();
+       
+        vector<string>ans;
+        permut(0,s,ans);
+        
+        return ans;
+        
+    }
+};
