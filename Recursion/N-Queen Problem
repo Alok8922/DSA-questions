@@ -1,0 +1,50 @@
+class Solution {
+public:
+    vector<vector<int>>result;
+
+    unordered_set<int>cols;
+    unordered_set<int>diag;
+    unordered_set<int>antidiag;
+
+    void solve(int row,int n,vector<int>&temp) {
+
+        if (row ==n) {
+            result.push_back(temp);
+            return;
+        }
+
+        for (int c = 0; c < n; c++) {
+
+            int diagConstant = row + c;
+            int antiDiagConstant = row - c;
+
+            if (cols.count(c) ||
+                diag.count(diagConstant) ||
+                antidiag.count(antiDiagConstant))
+                continue;
+
+            cols.insert(c);
+            diag.insert(diagConstant);
+            antidiag.insert(antiDiagConstant);
+
+            temp.push_back(c + 1); // 1-based indexing
+
+            solve(row + 1, n, temp);
+
+            temp.pop_back();
+
+            cols.erase(c);
+            diag.erase(diagConstant);
+            antidiag.erase(antiDiagConstant);
+        }
+    }
+
+    vector<vector<int>> nQueen(int n) {
+
+        vector<int> temp;
+
+        solve(0, n, temp);
+
+        return result;
+    }
+};
