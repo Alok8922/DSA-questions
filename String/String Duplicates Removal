@@ -1,0 +1,15 @@
+class Solution {
+  public:
+    string removeDuplicates(string &s) {
+        // code here
+      vector<bool>visited(256,0);
+      string ans;
+      for(char c:s){
+          if(!visited[c]){
+          ans+=c;
+          visited[c]=1;
+          }
+      }
+      return ans;
+    }
+};
